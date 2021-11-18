@@ -5,10 +5,21 @@ function App() {
   
   const [students, setStudents] = useState([])
   const [ searchInput, setSearchInput ] = useState('')
-  const [tags, setTags] = useState([])
   const [test, setTestDiv] = useState(false)
   const allStudents = students.students
 
+  // const [allTags, setTags] = useState(saveditems || [{}])
+
+  useEffect(() => {
+    localStorage.setItem('tags', JSON.stringify(allTags));
+  });
+
+  const saveditems = JSON.parse(localStorage.getItem('tags'));
+// const [items, setItems] = useState(saveditems || []);
+const [allTags, setTags] = useState(saveditems || [{}])
+  const submitTags = tag => {
+    setTags([...allTags, tag])
+  }
 
   useEffect(() => {
     const url = "https://api.hatchways.io/assessment/students";
@@ -18,12 +29,18 @@ function App() {
         const response = await fetch(url);
         const json = await response.json();
         setStudents(json)
+        
       } catch (error) {
         console.log("error", error);
       }
     };
     fetchApi();
-
+    students?.students?.forEach(ele => {
+      if (typeof ele === 'object') {
+        ele['tags'] = 'hi'
+      }
+    })
+    
   }, []);
 
   const filter = (profiles, query) => {
@@ -51,10 +68,8 @@ function App() {
       </>
     )
   }
-  const changeState = () => {
-    setTestDiv(!test)
-  }
-  console.log('test', test)
+ 
+  
 
   return (
     <div className='wrapper'>
@@ -80,7 +95,7 @@ function App() {
         {allStudents?.map(student => {
           return (
             <div className='container2'>
-           <Profile student={student} />
+           <Profile allTags={allTags} submitTags={submitTags} student={student} />
            </div> 
            )})} 
            </> : searchbar}

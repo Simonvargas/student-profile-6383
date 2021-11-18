@@ -1,25 +1,41 @@
 import { useState, useEffect } from 'react'
 import '../App.css'
 
-function Profile({student}) {
+const theTag = {
+    id: null,
+    tag: '',
+  };
+
+function Profile({student, submitTags, allTags}) {
   
 //   const [ searchInput, setSearchInput ] = useState('')
   const [test, setTestDiv] = useState(false)
-  const [tags, setTags] = useState([])
-  const [tag, setTag] = useState('')
+//   const [tags, setTags] = useState([])
+  const [tag, setTag] = useState(theTag)
+ 
+
   
+  const handleInput = e => {
+    setTag({...tag, [e.target.name]: e.target.value});
+  }
+
   function addTag(e) {
       if (e.key === 'Enter') {
-        setTags([...tags, tag]);
-        setTag('')
+        tag.id = Number(student.id)
+        submitTags(tag)
+        setTag(theTag)
       }
   }
   
   let total = 0
+ 
+
 
   const changeState = () => {
     setTestDiv(!test)
   }
+
+
   
 
   return (
@@ -39,8 +55,16 @@ function Profile({student}) {
                 <div className='details'>Company: {student.company}</div>
                 <div className='details'>Skills: {student.skill}</div>
                 <div className='details'>Average: {total / student.grades.length}%</div>
-                <p>{tags?.map(tag => <div className='tag'>{tag}</div>)}</p>
-                <input onKeyDown={addTag} className='tag-input' placeholder='Add a tag' value={tag} onChange={(e) => setTag(e.target.value)}></input>
+                <p>
+                    {allTags?.map(tag => {
+                        if (tag.id == student.id) {
+                            return (
+                                <div className='tag'>{tag.tag}</div>
+                            )
+                        }
+                    })}
+                    </p>
+                <input onKeyDown={addTag} className='tag-input' placeholder='Add a tag' value={tag.tag} name='tag' onChange={handleInput}></input>
                 {test ? <div><br></br>{student.grades.map((grade, i) => (<div>Test {i + 1}: {grade}%</div>))}</div> : ''}
                 </div>
               </div>
