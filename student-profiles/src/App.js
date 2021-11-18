@@ -5,17 +5,15 @@ function App() {
   
   const [students, setStudents] = useState([])
   const [ searchInput, setSearchInput ] = useState('')
+  const [ searchTag, setSearchTag] = useState('')
   const [test, setTestDiv] = useState(false)
   const allStudents = students.students
-
-  // const [allTags, setTags] = useState(saveditems || [{}])
 
   useEffect(() => {
     localStorage.setItem('tags', JSON.stringify(allTags));
   });
 
   const saveditems = JSON.parse(localStorage.getItem('tags'));
-// const [items, setItems] = useState(saveditems || []);
 const [allTags, setTags] = useState(saveditems || [{}])
   const submitTags = tag => {
     setTags([...allTags, tag])
@@ -35,13 +33,22 @@ const [allTags, setTags] = useState(saveditems || [{}])
       }
     };
     fetchApi();
-    students?.students?.forEach(ele => {
-      if (typeof ele === 'object') {
-        ele['tags'] = 'hi'
-      }
-    })
+   
     
   }, []);
+
+  const addTags = allStudents?.map(student => {
+    student['tags'] = []
+    allTags?.map(tag => {
+      if (student.id == tag.id) {
+       student['tags'].push(tag.tag)
+      }
+    })
+    // console.log(student)
+  })
+
+  // console.log('adasd', allStudents)
+
 
   const filter = (profiles, query) => {
     return profiles.filter((profile) => {
@@ -61,7 +68,36 @@ const [allTags, setTags] = useState(saveditems || [{}])
     {filteredStudents?.map(student => {
           return (
             <div className='container2'>
-            <Profile student={student} />
+            <Profile allTags={allTags} submitTags={submitTags} student={student} />
+            </div> 
+          )
+        })}
+      </>
+    )
+  }
+
+  const filter2 = (profiles, query) => {
+    let arr = []
+     profiles?.forEach((profile) => {
+       profile?.tags?.forEach(tag => {
+        const find = tag.toLowerCase()
+        if (find === query) arr.push(profile)
+      })
+    })
+    return arr
+  }
+
+  let searchbar2 = null
+
+  if (searchTag) {
+    const filteredStudents1 = filter2(allStudents, searchTag)
+    console.log(filteredStudents1)
+    searchbar2 = (
+      <>
+    {filteredStudents1?.map(student => {
+          return (
+            <div className='container2'>
+            <Profile allTags={allTags} submitTags={submitTags} student={student} />
             </div> 
           )
         })}
@@ -69,6 +105,8 @@ const [allTags, setTags] = useState(saveditems || [{}])
     )
   }
  
+
+  
   
 
   return (
@@ -86,19 +124,19 @@ const [allTags, setTags] = useState(saveditems || [{}])
         <input 
         className='search-input1'
         placeholder='Search by tag'
-        // value={searchInput}
-        // onChange={(e) => setSearchInput((e.target.value).toLowerCase())}
+        value={searchTag}
+        onChange={(e) => setSearchTag((e.target.value).toLowerCase())}
         ></input>
         </div>
         <>
-        {!searchInput ? <>
+        {!searchInput && !searchTag ? <>
         {allStudents?.map(student => {
           return (
             <div className='container2'>
            <Profile allTags={allTags} submitTags={submitTags} student={student} />
            </div> 
            )})} 
-           </> : searchbar}
+           </> : searchbar || searchbar2}
         </>
       </div>
     </div>
