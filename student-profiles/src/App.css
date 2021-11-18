@@ -94,3 +94,23 @@ button:focus {
 .search-input1::placeholder {
     color: lightgray
 }
+
+.btn {
+    float: right;
+    background-color: white;
+    border: none;
+    position: relative;
+    right: 10px;
+    top: 20px;
+    color: gray;
+}
+
+.h1 {
+    float: left
+}
+
+.header-container {
+    width: 100%;
+    display: inline-block;
+
+}
