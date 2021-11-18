@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import '../App.css'
 
-function Profile({student}) {
+function searchProfile({student}) {
   
 //   const [ searchInput, setSearchInput ] = useState('')
   const [test, setTestDiv] = useState(false)
@@ -38,4 +38,4 @@ function Profile({student}) {
   );
 }
 
-export default Profile;
+export default searchProfile;

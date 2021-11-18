@@ -35,9 +35,7 @@ button:focus {
     width: 100%;
     height: 100%;
     background-color: white;
-    border-bottom: 1px solid lightgray;
-    /* display: grid;
-    grid-template-columns: repeat(2, 1fr); */
+
 }
 
 .column1 {
@@ -112,5 +110,16 @@ button:focus {
 .header-container {
     width: 100%;
     display: inline-block;
+
+}
+
+.test-scores {
+    /* position: absolute; */
+    bottom: 0;
+}
+
+.container2 {
+    width: 100%;
+    border-bottom: 1px solid lightgray;
 
 }
