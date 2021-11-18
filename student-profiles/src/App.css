@@ -123,3 +123,19 @@ button:focus {
     border-bottom: 1px solid lightgray;
 
 }
+
+.tag-input {
+    border: none;
+    margin-top: 10px;
+    border-bottom: 1px solid lightgray;
+}
+
+.tag {
+    background-color: lightgray;
+    width: 12%;
+    display: inline;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 3px;
+    text-align: center;
+}

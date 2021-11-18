@@ -5,10 +5,10 @@ function App() {
   
   const [students, setStudents] = useState([])
   const [ searchInput, setSearchInput ] = useState('')
+  const [tags, setTags] = useState([])
   const [test, setTestDiv] = useState(false)
   const allStudents = students.students
 
-  let total = 0
 
   useEffect(() => {
     const url = "https://api.hatchways.io/assessment/students";
@@ -42,7 +42,6 @@ function App() {
     searchbar = (
       <>
     {filteredStudents?.map(student => {
-          {student.grades.map(avg => { (total += Number(avg)) }) }
           return (
             <div className='container2'>
             <Profile student={student} />
@@ -63,15 +62,22 @@ function App() {
         <div className='search-input'>
         <input 
         className='search-input1'
-        placeholder=' Search by name'
+        placeholder='Search by name'
         value={searchInput}
         onChange={(e) => setSearchInput((e.target.value).toLowerCase())}
+        ></input>
+        </div>
+        <div className='search-input'>
+        <input 
+        className='search-input1'
+        placeholder='Search by tag'
+        // value={searchInput}
+        // onChange={(e) => setSearchInput((e.target.value).toLowerCase())}
         ></input>
         </div>
         <>
         {!searchInput ? <>
         {allStudents?.map(student => {
-          {student.grades.map(avg => { (total += Number(avg)) }) }
           return (
             <div className='container2'>
            <Profile student={student} />
