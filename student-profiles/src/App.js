@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import Button from './components/button'
-import TestScores from './components/testScore'
 import Profile from './components/profile'
 function App() {
   
@@ -46,20 +44,9 @@ function App() {
     {filteredStudents?.map(student => {
           {student.grades.map(avg => { (total += Number(avg)) }) }
           return (
-            <div className='student-container'>
-              <div className='column1'>
-                <img className='profile-img' src={student.pic}></img>
-              </div>
-              <div className='column2'>
-                <h1>{student.firstName} {student.lastName}</h1>
-                <div className='student-details'>
-                <div className='details'>{student.email}</div>
-                <div className='details'>Company: {student.company}</div>
-                <div className='details'>Skills: {student.skill}</div>
-                <div className='details'>Average: {total / student.grades.length}%</div>
-                </div>
-              </div>
-            </div>
+            <div className='container2'>
+            <Profile student={student} />
+            </div> 
           )
         })}
       </>
